@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Opening YouTube...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var videoId = urlParams.get('vid');
+      var ytPath = videoId ? "watch?v=" + videoId : "@itsvirtualinsaan";
+      var ytUrl = "www.youtube.com/" + ytPath;
+      var fallbackUrl = "https://" + ytUrl;
+      
+      var isAndroid = /Android/i.test(navigator.userAgent);
+      var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      if (isAndroid) {
+        window.location.href = "intent://" + ytUrl + "#Intent;scheme=https;package=com.google.android.youtube;end";
+      } else if (isIOS) {
+        window.location.href = "vnd.youtube://" + ytUrl;
+        setTimeout(function() { window.location.href = fallbackUrl; }, 1500);
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    })();
+  </script>
+</head>
+<body style="font-family:sans-serif; text-align:center; padding-top:20%; background-color:#121212; color:#ffffff;">
+  <p>Redirecting to YouTube App...</p>
+</body>
+</html>
