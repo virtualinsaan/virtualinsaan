@@ -7,11 +7,11 @@
   <script>
     (function() {
       var urlParams = new URLSearchParams(window.location.search);
-      var videoId = urlParams.get('vid');
-      var listId = urlParams.get('list');
-      
-      // Default: Agar koi parameter na ho toh TLOU 2 Grounded Playlist khulegi
-      var ytPath = "playlist?list=PLFd2o5TtenkE";
+      var videoId = urlParams.get('vid') || urlParams.get('v');
+      var listId = urlParams.get('list') || urlParams.get('playlist');
+
+      // Default: Direct Main Channel khulega
+      var ytPath = "@itsvirtualinsaan";
 
       if (listId) {
         ytPath = "playlist?list=" + listId;
@@ -21,7 +21,7 @@
 
       var ytUrl = "www.youtube.com/" + ytPath;
       var fallbackUrl = "https://" + ytUrl;
-      
+
       var isAndroid = /Android/i.test(navigator.userAgent);
       var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
@@ -29,8 +29,8 @@
         window.location.href = "intent://" + ytUrl + "#Intent;scheme=https;package=com.google.android.youtube;end";
       } else if (isIOS) {
         window.location.href = "vnd.youtube://" + ytUrl;
-        setTimeout(function() { 
-          window.location.href = fallbackUrl; 
+        setTimeout(function() {
+          window.location.href = fallbackUrl;
         }, 1500);
       } else {
         window.location.href = fallbackUrl;
