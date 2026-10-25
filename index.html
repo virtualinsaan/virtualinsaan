@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>Opening YouTube...</title>
@@ -8,7 +8,17 @@
     (function() {
       var urlParams = new URLSearchParams(window.location.search);
       var videoId = urlParams.get('vid');
-      var ytPath = videoId ? "watch?v=" + videoId : "@itsvirtualinsaan";
+      var listId = urlParams.get('list');
+      
+      // Default: Agar koi parameter na ho toh TLOU 2 Grounded Playlist khulegi
+      var ytPath = "playlist?list=PLFd2o5TtenkE";
+
+      if (listId) {
+        ytPath = "playlist?list=" + listId;
+      } else if (videoId) {
+        ytPath = "watch?v=" + videoId;
+      }
+
       var ytUrl = "www.youtube.com/" + ytPath;
       var fallbackUrl = "https://" + ytUrl;
       
@@ -19,14 +29,16 @@
         window.location.href = "intent://" + ytUrl + "#Intent;scheme=https;package=com.google.android.youtube;end";
       } else if (isIOS) {
         window.location.href = "vnd.youtube://" + ytUrl;
-        setTimeout(function() { window.location.href = fallbackUrl; }, 1500);
+        setTimeout(function() { 
+          window.location.href = fallbackUrl; 
+        }, 1500);
       } else {
         window.location.href = fallbackUrl;
       }
     })();
   </script>
 </head>
-<body style="font-family:sans-serif; text-align:center; padding-top:20%; background-color:#121212; color:#ffffff;">
-  <p>Redirecting to YouTube App...</p>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center; padding-top: 25%; background-color: #0f0f0f; color: #ffffff;">
+  <p style="font-size: 1.1rem; opacity: 0.85;">Redirecting to YouTube...</p>
 </body>
 </html>
